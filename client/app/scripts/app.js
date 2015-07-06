@@ -17,7 +17,8 @@ var app = angular.module('fakeLunchHubApp', [
     'ngTouch'
   ]);
 
-app.config(function ($routeProvider) {
+app.config(function ($routeProvider, $locationProvider) {
+  $locationProvider.html5Mode(true);
   $routeProvider
     .when('/', {
       templateUrl: 'views/main.html',
@@ -35,6 +36,12 @@ app.config(function ($routeProvider) {
       redirectTo: '/'
     });
 });
+
+// app.config(function($authProvider) {
+//   $authProvider.configure({
+//     apiUrl: '/api'
+//   });
+// });
 
 app.factory('Group', ['$resource', function($resource) {
   return $resource('/api/groups/:id.json', null, {

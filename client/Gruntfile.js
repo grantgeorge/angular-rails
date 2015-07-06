@@ -25,6 +25,8 @@ module.exports = function (grunt) {
     dist: '../public'
   };
 
+  var modRewrite = require('connect-modrewrite');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -92,6 +94,9 @@ module.exports = function (grunt) {
 
             // Setup the proxy
             var middlewares = [
+              // Redirect anything that's not a file or an API call to /index.html.
+              // This allows HTML5 pushState to work on page reloads.
+              modRewrite(['!/api|/assets|\\..+$ /index.html']),
               require('grunt-connect-proxy/lib/utils').proxyRequest,
               connect.static('.tmp'),
               connect().use(
