@@ -1,17 +1,20 @@
 source 'https://rubygems.org'
 
-
 gem 'rails', '4.2.1'
-
 gem 'rails-api'
-
 gem 'spring', :group => :development
-
-
 gem 'pg'
+# Use devise_token_auth for authentication.
+gem 'devise_token_auth'
+# Use rack-rewrite to allow use of HTML5 pushState.
+gem 'rack-rewrite'
 
 group :test, :development do
   gem 'rspec-rails'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
+  gem 'compass'
 end
 
 # To use ActiveModel has_secure_password
