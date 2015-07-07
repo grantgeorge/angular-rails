@@ -12,11 +12,12 @@ gem 'rack-rewrite'
 
 gem 'active_model_serializers'
 
+gem 'factory_girl_rails'
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'faker'
-  gem 'factory_girl_rails'
   gem 'byebug'
   gem 'web-console'
   gem 'colorize'
