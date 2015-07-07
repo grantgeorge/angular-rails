@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  resources :groups, except: [:new, :edit]
 
   scope '/api' do
-    resources :groups, except: [:new, :edit]
+    resources :widgets, except: [:new, :edit]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

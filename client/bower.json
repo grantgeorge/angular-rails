@@ -15,7 +15,7 @@
     "angular-mocks": "^1.3.0"
   },
   "appPath": "app",
-  "moduleName": "fakeLunchHubApp",
+  "moduleName": "widgetApp",
   "overrides": {
     "bootstrap": {
       "main": [

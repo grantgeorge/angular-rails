@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name fakeLunchHubApp.controller:AboutCtrl
+ * @name widgetApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the fakeLunchHubApp
+ * Controller of the widgetApp
  */
-angular.module('fakeLunchHubApp')
+angular.module('widgetApp')
   .controller('AboutCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',

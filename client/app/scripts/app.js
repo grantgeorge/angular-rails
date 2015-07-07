@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc overview
- * @name fakeLunchHubApp
+ * @name widgetApp
  * @description
- * # fakeLunchHubApp
+ * # widgetApp
  *
  * Main module of the application.
  */
-var app = angular.module('fakeLunchHubApp', [
+var app = angular.module('widgetApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -28,23 +28,17 @@ app.config(function ($routeProvider, $locationProvider) {
       templateUrl: 'views/about.html',
       controller: 'AboutCtrl'
     })
-    .when('/groups', {
-      templateUrl: 'views/groups.html',
-      controller: 'GroupsCtrl'
+    .when('/widgets', {
+      templateUrl: 'views/widgets.html',
+      controller: 'WidgetsCtrl'
     })
     .otherwise({
       redirectTo: '/'
     });
 });
 
-// app.config(function($authProvider) {
-//   $authProvider.configure({
-//     apiUrl: '/api'
-//   });
-// });
-
-app.factory('Group', ['$resource', function($resource) {
-  return $resource('/api/groups/:id.json', null, {
+app.factory('Widget', ['$resource', function($resource) {
+  return $resource('/api/widgets/:id.json', null, {
     'update': { method:'PUT' }
   });
 }]);

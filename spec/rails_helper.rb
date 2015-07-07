@@ -26,7 +26,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-Capybara.javascript_driver = :selenium
+Capybara.javascript_driver = :webkit
 
 # Includes rack-rewrite configuration so HTML5 pushState can function properly.
 Capybara.app = Rack::Builder.new do
@@ -67,13 +67,13 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:all, type: :feature) do
-    system("grunt build --gruntfile #{Rails.configuration.gruntfile_location}")
-  end
+  # config.before(:all, type: :feature) do
+  #   system("grunt build --gruntfile #{Rails.configuration.gruntfile_location}")
+  # end
 
-  config.after(:all, type: :feature) do
-    FileUtils.rm_rf(Rails.root.join("public"))
-  end
+  # config.after(:all, type: :feature) do
+  #   FileUtils.rm_rf(Rails.root.join("public"))
+  # end
 
   config.before(:each) do
     DatabaseCleaner.start
