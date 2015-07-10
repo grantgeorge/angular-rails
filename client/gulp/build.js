@@ -91,3 +91,5 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('build', ['html', 'fonts', 'other']);
+
+gulp.task('heroku:production', ['build']);
