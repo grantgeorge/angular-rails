@@ -30,6 +30,15 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
+    shell: {
+      startRailsServer: {
+        command: '../bin/rails server',
+        options: {
+          async: true
+        }
+      }
+    },
+
     // Project settings
     yeoman: appConfig,
 

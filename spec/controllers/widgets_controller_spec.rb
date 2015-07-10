@@ -24,13 +24,11 @@ RSpec.describe WidgetsController, type: :controller do
   # Widget. As you add validations to Widget, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    # skip("Add a hash of attributes valid for your model")
-    { name: "test" }
+    { widget: attributes_for(:widget) }
   }
 
   let(:invalid_attributes) {
-    # skip("Add a hash of attributes invalid for your model")
-    { name: "" }
+    { widget: attributes_for(:invalid_widget) }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -38,19 +36,49 @@ RSpec.describe WidgetsController, type: :controller do
   # WidgetsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  let(:widget) { create(:widget) }
+
   describe "GET #index" do
-    it "assigns all widgets as @widgets" do
-      widget = create(:widget)
-      get :index, {}, valid_session
-      expect(assigns(:widgets)).to eq([widget])
+    context "when resources are found" do
+      it "assigns all widgets as @widgets" do
+        widget # call to use memoized widget
+        get :index, {}, valid_session
+        expect(assigns(:widgets)).to eq([widget])
+      end
+
+      it "responds with http status ok" do
+        widget
+        get :index, {}, valid_session
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "when resources are not found" do
+      it "responds with http status not_found" do
+        get :index, {}, valid_session
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 
   describe "GET #show" do
-    it "assigns the requested widget as @widget" do
-      widget = create(:widget)
-      get :show, {:id => widget.to_param}, valid_session
-      expect(assigns(:widget)).to eq(widget)
+    context "when resource is found" do
+      it "responds with http status ok" do
+        get :show, {:id => widget.to_param}, valid_session
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "assigns the requested widget as @widget" do
+        get :show, {:id => widget.to_param}, valid_session
+        expect(assigns(:widget)).to eq(widget)
+      end
+    end
+
+    context "when resource is not found" do
+      it "responds with http status not_found" do
+        get :show, {:id => 99999}, valid_session
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 
@@ -58,83 +86,91 @@ RSpec.describe WidgetsController, type: :controller do
     context "with valid params" do
       it "creates a new Widget" do
         expect {
-          post :create, { :widget => attributes_for(:widget) }, valid_session
+          post :create, valid_attributes, valid_session
         }.to change(Widget, :count).by(1)
       end
 
       it "assigns a newly created widget as @widget" do
-        post :create, { :widget => attributes_for(:widget) }, valid_session
+        post :create, valid_attributes, valid_session
         expect(assigns(:widget)).to be_a(Widget)
         expect(assigns(:widget)).to be_persisted
       end
 
-      it "redirects to the created widget" do
-        post :create, { :widget => attributes_for(:widget) }, valid_session
-        expect(response).to be_created
+      it "resopnds with ok" do
+        post :create, valid_attributes, valid_session
+        expect(response).to have_http_status(:ok)
       end
     end
 
     context "with invalid params" do
-      it "responds with be_unprocessable_entity" do
-        post :create, { :widget => attributes_for(:widget, :name => "") }, valid_session
-        expect(response).to have_http_status(:unprocessable_entity)
+      it "responds with bad_request" do
+        post :create, invalid_attributes, valid_session
+        expect(response).to have_http_status(:bad_request)
       end
     end
   end
 
-  describe "PUT #update" do
+  describe "PUT #update", :focus => true do
     context "with valid params" do
       let(:new_attributes) {
-        { name: "test_new_name" }
+        attributes_for(:widget, name: "test_new_name")
       }
 
-      it "updates the requested widget" do
-        widget = create(:widget)
-        put :update, {:id => widget.to_param, :widget => new_attributes}, valid_session
+      before :each do
+        allow(Widget).to receive(:find) { widget }
+      end
+
+      it "updates the requested widget", :focus => true do
+        put :update, {:id => widget.to_param, widget: new_attributes}, valid_session
         widget.reload
         expect(widget.name).to eq "test_new_name"
       end
 
       it "assigns the requested widget as @widget" do
-        widget = create(:widget)
-        put :update, {:id => widget.to_param, :widget => valid_attributes}, valid_session
+        put :update, {:id => widget.to_param, widget: valid_attributes}, valid_session
         expect(assigns(:widget)).to eq(widget)
       end
 
-      it "redirects to the widget" do
-        widget = create(:widget)
-        put :update, {:id => widget.to_param, :widget => valid_attributes}, valid_session
-        expect(response).to have_http_status(:no_content)
+      it "responds with ok" do
+        put :update, {:id => widget.to_param, widget: valid_attributes}, valid_session
+        expect(response).to have_http_status(:ok)
       end
     end
 
     context "with invalid params" do
       it "assigns the widget as @widget" do
-        widget = create(:widget)
-        put :update, {:id => widget.to_param, :widget => invalid_attributes}, valid_session
+        put :update, {:id => widget.to_param, :widget => invalid_attributes[:widget]}, valid_session
         expect(assigns(:widget)).to eq(widget)
       end
 
-      it "re-renders the 'edit' template" do
-        widget = create(:widget)
-        put :update, {:id => widget.to_param, :widget => invalid_attributes}, valid_session
-        expect(response).to have_http_status(:unprocessable_entity)
+      it "responds with bad_request" do
+        put :update, {:id => widget.to_param, :widget => invalid_attributes[:widget]}, valid_session
+        expect(response).to have_http_status(:bad_request)
       end
     end
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested widget" do
-      widget = create(:widget)
-      expect {
+
+    context "when resource is found" do
+      it "destroys the requested widget" do
+        widget # call to use memoized widget
+        expect {
+          delete :destroy, {:id => widget.to_param}, valid_session
+        }.to change(Widget, :count).by(-1)
+      end
+
+      it "responds with ok" do
         delete :destroy, {:id => widget.to_param}, valid_session
-      }.to change(Widget, :count).by(-1)
+        expect(response).to have_http_status(:ok)
+      end
     end
 
-    it "redirects to the widgets list" do
-      widget = create(:widget)
-      delete :destroy, {:id => widget.to_param}, valid_session
-      expect(response).to have_http_status(:no_content)
+    context "when resource is not found" do
+      it "responds with http status not_found" do
+        delete :destroy, {:id => 99999}, valid_session
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 

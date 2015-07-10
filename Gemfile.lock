@@ -225,25 +225,24 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers
-  byebug
-  capybara
-  capybara-webkit
-  colorize
-  database_cleaner
-  devise_token_auth
-  factory_girl_rails
-  faker
-  growl
-  guard-rspec
-  pg
-  rack-rewrite
+  active_model_serializers (= 0.9.3)
+  byebug (= 5.0.0)
+  capybara (= 2.4.4)
+  capybara-webkit (= 1.6.0)
+  colorize (= 0.7.7)
+  database_cleaner (= 1.4.1)
+  devise_token_auth (= 0.1.31)
+  factory_girl_rails (= 4.5.0)
+  faker (= 1.4.3)
+  growl (= 1.0.3)
+  guard-rspec (= 4.6.0)
+  pg (= 0.18.2)
+  rack-rewrite (= 1.5.1)
   rails (= 4.2.1)
-  rails-api
+  rails-api (= 0.4.0)
   rails_12factor (= 0.0.3)
-  rails_stdout_logging (= 0.0.3)
-  rb-fsevent
-  rspec-rails
-  selenium-webdriver
-  spring-commands-rspec
-  web-console
+  rb-fsevent (= 0.9.5)
+  rspec-rails (= 3.3.2)
+  selenium-webdriver (= 2.46.2)
+  spring-commands-rspec (= 1.0.4)
+  web-console (= 2.1.3)
