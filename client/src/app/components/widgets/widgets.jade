@@ -1,0 +1,7 @@
+div.container
+  div(ng-include="'app/components/navbar/navbar.html'")
+  h1 Widgets
+
+  div(ng-repeat="widget in widgets")
+    p {{ widget.name }}
+    p {{ widget.description }}
