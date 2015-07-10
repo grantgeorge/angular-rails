@@ -1,11 +1,7 @@
 {
   "name": "widgetApp",
-  "version": "0.0.0",
-  "dependencies": {},
-  "scripts": {
-    "test": "gulp test"
-  },
-  "devDependencies": {
+  "version": "0.0.1",
+  "dependencies": {
     "browser-sync": "~2.7.12",
     "browser-sync-spa": "~1.0.2",
     "chalk": "~1.0.0",
@@ -52,6 +48,11 @@
     "uglify-save-license": "~0.4.1",
     "wiredep": "~2.2.2",
     "wrench": "~1.5.8"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "devDependencies": {
   },
   "engines": {
     "node": ">=0.10.0"
