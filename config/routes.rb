@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
   scope '/api' do
-    resources :widgets, except: [:new, :edit]
+    namespace :v1, defaults: { format: :json } do
+      resources :widgets, except: [:new, :edit]
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
